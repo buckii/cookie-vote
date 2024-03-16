@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 
 module.exports = {
+  mode: 'development',
   entry: './src/js/app.js',
   output: {
     filename: 'js/app.js',
@@ -15,6 +16,8 @@ module.exports = {
       },
     ],
   },
+  resolve: { alias: { vue: 'vue/dist/vue.esm.js' } },
+  stats: {warnings:false},
   devServer: {
     static: {
       directory: path.join(__dirname, 'dist'),
