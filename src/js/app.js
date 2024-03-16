@@ -142,8 +142,9 @@ Vue.component('cookie-chart', {
           this.picks.push(i);
         }
       },
-      castVote() {
+      async castVote() {
         this.votes.push(this.picks);
+        let votes = await axios.post(api_base_url + '/api/votes', {picks:this.picks}); //
         this.voteCounts = this.getCountsFromVotes();
         this.picks = [];
         this.updateVotesChart();
