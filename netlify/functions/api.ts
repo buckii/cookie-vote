@@ -1,11 +1,19 @@
-import express, { Router } from "express";
+import express from "express";
 import serverless from "serverless-http";
+const mongoose = require("mongoose");
 
-const api = express();
+const voteRouter = require("../../routes/VoteRoutes");
 
-const router = Router();
-router.get("/hello", (req, res) => res.send("Hello World!"));
+const app = express();
 
-api.use("/api/", router);
+app.use("/api/votes", voteRouter);
+//configure mongoose
+const mongodb_uri = process.env.MONGODB_URI || "mongodb://localhost/CRUD";
+const mongodb_options = {
+};
+mongoose.connect(mongodb_uri, mongodb_options)
+  .catch(err => {
+    console.log(err);
+  });
 
-export const handler = serverless(api);
+export const handler = serverless(app);
