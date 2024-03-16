@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title></title>
+        <script src="js/app.js"></script>
+    </head>
+    <body>
+<main class="app">
+    <section class="vote">
+      <h4>Tap to rank your favorites in order:</h4>
+      <ul>
+        <li :class="{pick: picks.includes(i)}" @click="pickCookie(i)" v-for="(cookie, i) in cookies">
+          <img :src="cookie.image" :alt="'Vote for ' + cookie.name" />
+          <div class="vote-label">{{ cookie.name }}</div>
+          <div class="rank" v-if="picks.includes(i)">{{picks.indexOf(i)+1}}</div>
+        </li>
+      </ul>
+      <button class="btn" id="vote-btn" @click="castVote">Cast Vote</button>
+      <div id="thank-you">Thanks for voting!</div>
+    </section>
+    <section class="results">
+      <cookie-chart ref="chart" :data="data" :options="options"></cookie-chart>
+    </section>
+</main>
+    </body>
+</html>
