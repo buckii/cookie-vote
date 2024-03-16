@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Vue from 'vue';
-import HorizontalBar from 'vue-chartjs';
+import { HorizontalBar } from 'vue-chartjs';
 import '../css/app.css';
 
 Vue.component('cookie-chart', {
@@ -12,7 +12,7 @@ Vue.component('cookie-chart', {
     },
     methods: {
       updateChart() {
-        console.log('udateChart');
+        console.log('updateChart');
         if(this._chart) {
           this._chart.destroy();
         }
@@ -121,11 +121,16 @@ Vue.component('cookie-chart', {
         return counts;
       },
       async refreshVoteCounts(update) {
+        try {
         let votes = await axios.get('https://vote.cookieorder.org/api/votes'); //
+        } catch(e) {
+          console.log('Getting votes failed.');
+          let votes = [];
+        }
       },
       updateVotesChart() {
         this.data.datasets[0].data = this.voteCounts;
-        //this.$refs.chart.updateChart();
+        this.$refs.chart.updateChart();
       },
       pickCookie(i) {
         let index = this.picks.indexOf(i);
