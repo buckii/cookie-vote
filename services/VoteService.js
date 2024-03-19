@@ -21,7 +21,7 @@ exports.getAllVotes = async () => {
 };
 
 exports.createVote = async (vote) => {
-    console.log({vote});
+    console.log({picks:vote.picks});
     let result = await VoteModel.create(vote);
     let all_votes = await this.getAllVotes();
     pusher.trigger("vote-channel", "vote-cast", {
