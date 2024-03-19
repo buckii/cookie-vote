@@ -17,6 +17,8 @@
     "https": "^1.0.0",
     "mongodb": "^6.5.0",
     "mongoose": "^8.2.2",
+    "pusher": "^5.2.0",
+    "pusher-js": "^8.4.0-rc2",
     "serverless-http": "^3.2.0",
     "vue": "^2",
     "vue-chartjs": "^2.8.7"

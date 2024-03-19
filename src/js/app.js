@@ -2,8 +2,12 @@ import axios from 'axios';
 import Vue from 'vue';
 import { HorizontalBar } from 'vue-chartjs';
 import '../css/app.css';
+import Pusher from 'pusher-js';
 
 let api_base_url = process.env.VUE_APP_API_BASE_URL || '';
+
+// Enable pusher logging - don't include this in production
+Pusher.logToConsole = true;
 
 Vue.component('cookie-chart', {
     extends: HorizontalBar,
@@ -16,15 +20,16 @@ Vue.component('cookie-chart', {
       updateChart() {
         console.log('updateChart');
         if(this._chart) {
-          this._chart.destroy();
+          this._chart.update();
+        } else {
+          this.renderChart(this.data, this.options);
         }
-        this.renderChart(this.data, this.options);
       }
     },
     watch: {
       data: function() {
         this.updateChart();
-      }
+      },
     }
   })
   
@@ -132,6 +137,18 @@ Vue.component('cookie-chart', {
     mounted() {
       this.refreshVoteCounts();
       this.updateVotesChart();
+
+      var pusher = new Pusher(process.env.VUE_APP_PUSHER_KEY, {
+        cluster: 'us2'
+      });
+
+      var channel = pusher.subscribe('vote-channel');
+      let vue = this;
+      channel.bind('vote-cast', function(data) {
+        vue.refreshVoteCounts(JSON.parse(data.message));
+        vue.updateVotesChart();
+      });
+
     },
     methods: {
       getCountsFromServerVotes(server_votes) {
@@ -163,10 +180,14 @@ Vue.component('cookie-chart', {
         let ty = document.getElementById('thank-you');
         ty.className = '';
       },
-      async refreshVoteCounts(update) {
+      async refreshVoteCounts(data) {
         try {
-          let votes = await axios.get(api_base_url + '/api/votes'); //
-          this.voteCounts = this.getCountsFromServerVotes(votes.data.data);
+          if(!data) {
+            let votes = await axios.get(api_base_url + '/api/votes'); //
+            data = votes.data.data;
+          }
+          console.log(data);
+          this.voteCounts = data;//this.getCountsFromServerVotes(data);
           this.updateVotesChart();
         } catch(e) {
           console.log('Getting votes failed.');
@@ -209,7 +230,7 @@ Vue.component('cookie-chart', {
         let votes = await axios.post(api_base_url + '/api/votes', {picks:this.picks}); //
         this.voteCounts = this.getCountsFromVotes();
         this.picks = [];
-        this.updateVotesChart();
+        //this.updateVotesChart();
         let ty = document.getElementById('thank-you');
         
         // show thank you
