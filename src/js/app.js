@@ -139,7 +139,7 @@ Vue.component('cookie-chart', {
       this.refreshVoteCounts();
       this.updateVotesChart();
 
-      var pusher = new Pusher(process.env.VUE_APP_PUSHER_KEY, {
+      var pusher = new Pusher(process.env.VUE_APP_PUSHER_KEY || '77177a226e31653e2d42', {
         cluster: 'us2'
       });
 
