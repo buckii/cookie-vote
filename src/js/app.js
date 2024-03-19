@@ -222,7 +222,7 @@ Vue.component('cookie-chart', {
           // add cookie as next choice
           this.picks.push(i);
         }
-        this.$foreceUpdate(); // force update
+        this.$forceUpdate(); // force update
       },
       async castVote() {
         this.votes.push(this.picks);
