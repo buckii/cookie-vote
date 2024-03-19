@@ -1,23 +1,34 @@
 <html>
     <head>
-        <title></title>
+        <title>Best Girl Scout Cookie of 2024 Election</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
     <body>
 <main class="app">
     <section class="vote">
-      <h4>Tap to rank your favorites in order:</h4>
-      <ul>
-        <li :class="{pick: picks.includes(i)}" @click="pickCookie(i)" v-for="(cookie, i) in cookies">
-          <img :src="cookie.image" :alt="'Vote for ' + cookie.name" />
-          <div class="vote-label">{{ cookie.name }}</div>
-          <div class="rank" v-if="picks.includes(i)">{{picks.indexOf(i)+1}}</div>
-        </li>
-      </ul>
-      <button class="btn" id="vote-btn" @click="castVote">Cast Vote</button>
-      <div id="thank-you">Thanks for voting!</div>
-    </section>
-    <section class="results">
-      <cookie-chart ref="chart" :data="data" :options="options"></cookie-chart>
+      <div class="vote-form" :class="{hidden:show_results}">
+        <h4>Tap to rank your favorites in order:</h4>
+        <ul>
+          <li :class="{pick: picks.includes(i)}" @click="pickCookie(i)" v-for="(cookie, i) in cookies">
+            <img :src="cookie.image" :alt="'Vote for ' + cookie.name" />
+            <div class="vote-label">{{ cookie.name }}</div>
+            <div class="rank" v-if="picks.includes(i)">{{picks.indexOf(i)+1}}</div>
+          </li>
+        </ul>
+        <button class="btn" id="vote-btn" @click="castVote">Cast Vote</button>
+        <a href="https://www.buckeyeinnovation.com" target="_blank" class="powered-by">
+          <img src="img/badge-standard.svg" alt="Powered by Buckeye Innovation" />
+        </a>
+      </div>
+      <div id="thank-you" :class="{open:show_results}">
+        <h2 v-if="!show_results">Thanks for voting!</h2>
+        <h2 v-else>Best Girl Scout Cookie 2024</h2>
+        <cookie-chart id="cookie-chart" ref="chart" :data="data" :options="options"></cookie-chart>
+        <button @click="resetVoteForm" v-if="allow_reset">reset for the next voter</button>
+        <a href="https://www.buckeyeinnovation.com" target="_blank" class="powered-by">
+          <img src="img/badge-standard-light.svg" alt="Powered by Buckeye Innovation" />
+        </a>
+      </div>
     </section>
 </main>
     </body>
