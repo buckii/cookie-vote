@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "webpack serve --env dev",
+    "dev": "webpack --env local",
     "serve": "npx webpack serve --env production",
     "prod": "webpack --env production",
     "run": "node app.js"
