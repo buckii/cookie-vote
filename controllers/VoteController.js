@@ -11,8 +11,9 @@ exports.getAllVotes = async (req, res) => {
  
 exports.createVote = async (req, res) => {
   try {
-    console.log({req_body:String(req.body)});
-    const vote = await voteService.createVote(String(req.body));
+    console.log(typeof(req.body));
+    let vote_input = typeof(req.body) == 'object' ? req.body : JSON.parse(String(req.body));
+    const vote = await voteService.createVote(vote_input);
     const votes = await voteService.getAllVotes();
     res.json({ data: {vote, votes}, status: "success" });
   } catch (err) {
