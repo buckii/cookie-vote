@@ -7,18 +7,19 @@ import Pusher from 'pusher-js';
 let api_base_url = process.env.VUE_APP_API_BASE_URL || '';
 
 // Enable pusher logging - don't include this in production
-Pusher.logToConsole = true;
+if(process.env.PUSHER_LOG === '1') {
+  console.log('logging Pusher');
+  Pusher.logToConsole = true;
+}
 
 Vue.component('cookie-chart', {
     extends: HorizontalBar,
     props: ['data', 'options'],
     mounted () {
-      console.log('cookie chart mounted')
       this.updateChart();
     },
     methods: {
       updateChart() {
-        console.log('updateChart');
         if(this._chart) {
           this._chart.update();
         } else {
@@ -163,7 +164,6 @@ Vue.component('cookie-chart', {
           }
         });
         this.votes = votes;
-        console.log(counts);
         return counts;
       },
       getCountsFromVotes(votes) {
@@ -186,7 +186,6 @@ Vue.component('cookie-chart', {
             let votes = await axios.get(api_base_url + '/api/votes'); //
             data = votes.data.data;
           }
-          console.log(data);
           this.voteCounts = data;//this.getCountsFromServerVotes(data);
           this.updateVotesChart();
         } catch(e) {
@@ -201,7 +200,6 @@ Vue.component('cookie-chart', {
         }
         // set the vote_count for each of the cookies
         this.voteCounts.forEach((vote_count, id) => {
-          console.log({vote_count, id,cookie: this.cookies[id]});
           this.cookies[id].vote_count = vote_count;
         });
 
