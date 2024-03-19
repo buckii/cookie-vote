@@ -3,7 +3,7 @@ import Vue from 'vue';
 import { HorizontalBar } from 'vue-chartjs';
 import '../css/app.css';
 
-let api_base_url = process.env.VUE_APP_API_BASE_URL;
+let api_base_url = process.env.VUE_APP_API_BASE_URL || '';
 
 Vue.component('cookie-chart', {
     extends: HorizontalBar,
