@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "css-loader": "^6.10.0",
+    "dotenv-webpack": "^8.0.1",
     "path": "^0.12.7",
     "style-loader": "^3.3.4",
     "webpack": "^5.90.3",
