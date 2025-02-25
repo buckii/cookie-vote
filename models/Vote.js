@@ -7,6 +7,6 @@ const voteSchema = new Schema({
       type: Date,
       default: Date.now,
     },
-  });
+  }, { collection: 'nachamber' });
    
   module.exports = mongoose.model("Vote", voteSchema);
