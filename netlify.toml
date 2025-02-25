@@ -1,5 +1,5 @@
 [build]
-    command = "yarn dev"
+    command = "yarn prod"
     publish = "/dist"
 [functions]
   external_node_modules = ["express"]
