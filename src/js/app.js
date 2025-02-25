@@ -1,15 +1,18 @@
 import axios from 'axios';
+import Pusher from 'pusher-js';
 import Vue from 'vue';
 import { HorizontalBar } from 'vue-chartjs';
 import '../css/app.css';
-import Pusher from 'pusher-js';
 
 let api_base_url = process.env.VUE_APP_API_BASE_URL || '';
+let pusher_key = '77177a226e31653e2d42'; //process.env.VUE_APP_PUSHER_KEY
 
 // Enable pusher logging - don't include this in production
 if(process.env.PUSHER_LOG === '1') {
-  console.log('logging Pusher');
+  console.log('Pusher logging enabled');
   Pusher.logToConsole = true;
+} else {
+  console.log('Pusher logging disabled');
 }
 
 Vue.component('cookie-chart', {
@@ -139,13 +142,14 @@ Vue.component('cookie-chart', {
       this.refreshVoteCounts();
       this.updateVotesChart();
 
-      var pusher = new Pusher(process.env.VUE_APP_PUSHER_KEY || '77177a226e31653e2d42', {
+      var pusher = new Pusher(pusher_key, {
         cluster: 'us2'
       });
 
       var channel = pusher.subscribe('vote-channel');
       let vue = this;
       channel.bind('vote-cast', function(data) {
+        console.log('updating vote counts');
         vue.refreshVoteCounts(JSON.parse(data.message));
         vue.updateVotesChart();
       });
