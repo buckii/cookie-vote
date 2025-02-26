@@ -125,7 +125,7 @@ Vue.component('cookie-chart', {
           yAxes: [{
             ticks: {
                 fontColor: "white",
-                fontSize: 20,
+                fontSize: 40,
                 stepSize: 1,
                 beginAtZero: true
             }
