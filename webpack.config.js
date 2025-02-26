@@ -26,7 +26,9 @@ module.exports = {
   },
   stats: {warnings:false},
   plugins: [
-    new Dotenv(),
+    new Dotenv({
+      systemvars: true
+    }),
   ],
   devServer: {
     static: {
