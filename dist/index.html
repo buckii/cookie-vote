@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Best Girl Scout Cookie of 2024 Election</title>
+        <title>Best Girl Scout Cookie of 2025</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
     <body>
@@ -22,7 +22,7 @@
       </div>
       <div id="thank-you" :class="{open:show_results}">
         <h2 v-if="!show_results">Thanks for voting!</h2>
-        <h2 v-else>Best Girl Scout Cookie 2024</h2>
+        <h2 v-else>Best Girl Scout Cookie 2025</h2>
         <cookie-chart id="cookie-chart" ref="chart" :data="data" :options="options"></cookie-chart>
         <button @click="resetVoteForm" v-if="allow_reset">reset for the next voter</button>
         <a href="https://www.buckeyeinnovation.com" target="_blank" class="powered-by">
